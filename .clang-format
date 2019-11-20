@@ -1,0 +1,5 @@
+# See: https://google.github.io/styleguide/cppguide.html
+---
+BasedOnStyle: Google
+IndentWidth: 4
+UseTab: Never
