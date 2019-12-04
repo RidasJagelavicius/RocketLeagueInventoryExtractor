@@ -1,5 +1,7 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/dnn.hpp>
@@ -8,110 +10,26 @@
 #include "ofApp.h"
 #include "ofMain.h"
 
+using namespace cv;
+using namespace cv::dnn;
+
 constexpr auto MODEL =
-    "frozen_east_text_detection.pb";  // The location of the model used to train
+    "C:\\Users\\Unknown_User\\Documents\\openFrameworks\\apps\\fantastic-finale-astudent82828211\\Rocket League Inventory Extractor\\frozen_east_text_detection.pb";  // The location of the model used to train
                                       // text detection
 constexpr int HEIGHT = 320;  // Resizes preprocessed image to this height
 constexpr int WIDTH = 320;   // Resizes preprocessed image to this width
 constexpr auto PATH_TO_TEST_IMAGES =
-    "..\\Test Images for RL\\Isolated";  // Folder containing isolated test
+    "C:\\Users\\Unknown_User\\Documents\\openFrameworks\\apps\\fantastic-finale-astudent82828211\\Rocket League Inventory Extractor\\Test Images for RL\\Isolated\\";  // Folder containing isolated test
                                          // images
-constexpr auto TEST_IMAGE_1 = "BareOctaneMG88.png";
+constexpr auto TEST_IMAGE_1 = "CertJagerXVI.png";
 constexpr float IMAGE_SCALE = 1.0; // Preprocessing image scale factor
 constexpr float NETWORK_SIZE = 320; // Preprocessing model network size - experiment to improve accuracy
 constexpr float CONFIDENCE_THRESHOLD = .50; // How confident we want to be that our text box properly encloses the text
-constexpr float NON_MAX_SUPPRESSION_THRESHOLD = .40; // 
-
-int main() {
-    /* Note:
-            Tesseract is a popular Text Recognition model that maps an image of
-       text to the actual content text. Tesseract requires a bounded region
-       within which to search for text. EAST Text Detection will detect and
-       bound the region containing text. Tesseract can then search within that
-       region for text.
-    */
-
-    /* References:
-    https://www.learnopencv.com/deep-learning-based-text-detection-using-opencv-c-python/
-    or https://github.com/spmallick/learnopencv/blob/master/TextDetectionEAST/textDetection.cpp
-    */
-
-    /* PROTOTYPE - most basic proof of concept */
-
-    /* ======================================= TEXT-DETECTION =======================================*/
-
-    // Load the model - EAST Text Detection
-    cv::dnn::Net net = cv::dnn::readNet(MODEL);
-
-    // Load in a test image
-    const std::string path_to_images = PATH_TO_TEST_IMAGES;
-    cv::Mat image = cv::imread(path_to_images + TEST_IMAGE_1);
-
-    /* The next function preprocesses an image.
-        The link below explains exactly how this works, but essentially,
-        preprocessing is a multi-step process that "helps combat illumination
-    changes"
-    https://www.pyimagesearch.com/2017/11/06/deep-learning-opencvs-blobfromimage-works/
-    */
-
-    // Preprocess the image to ready it for reading
-    cv::Mat output_image;
-    cv::dnn::blobFromImage(image, output_image, IMAGE_SCALE,
-                           cv::Size(WIDTH, HEIGHT),
-                           cv::Scalar(123.68, 116.78, 103.94), true, false);
-
-    // Display the images
-    cv::imshow("Unprocessed Image",image);
-    cv::imshow("Preprocessed Image", output_image);
-
-    // Specify the output layers for the network
-    std::vector<cv::String> outputLayers(2);
-    outputLayers[0] = "feature_fusion/Conv_7/Sigmoid"; // Geometry of the text box
-    outputLayers[1] = "feature_fusion/concat_3"; // Confidence of the detected box
-
-    // Pass the input image through the network and obtain geometry and confidence scores
-    std::vector<cv::Mat> output;
-    net.setInput(output_image);
-    net.forward(output, outputLayers);
-    cv::Mat scores = output[0];
-    cv::Mat geometry = output[1];
-
-    // Decode the positions and orientations of the text boxes 
-    std::vector<cv::RotatedRect> boxes;
-    std::vector<float> confidences;
-    decode(scores, geometry, CONFIDENCE_THRESHOLD, boxes, confidences);
-
-    // Filter out the best candidates for the correct text box using Non-Maximum Suppression
-    std::vector<int> indices;
-    cv::dnn::NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD,
-                 NON_MAX_SUPPRESSION_THRESHOLD,
-                 indices);
-
-    // Render text boxes.
-    cv::Point2f ratio((float)image.cols / WIDTH,
-                      (float)image.rows / HEIGHT);
-    for (size_t i = 0; i < indices.size(); ++i) {
-        cv::RotatedRect& box = boxes[indices[i]];
-
-        cv::Point2f vertices[4];
-        box.points(vertices);
-        for (int j = 0; j < 4; ++j) {
-            vertices[j].x *= ratio.x;
-            vertices[j].y *= ratio.y;
-        }
-        for (int j = 0; j < 4; ++j)
-            line(image, vertices[j], vertices[(j + 1) % 4],
-                 cv::Scalar(0, 255, 0),
-                 2, cv::LINE_AA);
-    }
-
-    // Print image with detections
-    cv::imshow("Text-Detection", image);
-}
-
+constexpr float NON_MAX_SUPPRESSION_THRESHOLD = .45; // This will change detection accuracy and the number of text boxes made
 
 // Decode the positions and orientations of the text boxes
-// Ref: https://github.com/spmallick/learnopencv/blob/master/TextDetectionEAST/textDetection.cpp
+// Ref:
+// https://github.com/spmallick/learnopencv/blob/master/TextDetectionEAST/textDetection.cpp
 void decode(const cv::Mat& scores, const cv::Mat& geometry, float scoreThresh,
             std::vector<cv::RotatedRect>& detections,
             std::vector<float>& confidences) {
@@ -139,7 +57,7 @@ void decode(const cv::Mat& scores, const cv::Mat& geometry, float scoreThresh,
             if (score < scoreThresh) continue;
 
             // Decode a prediction.
-            // Multiple by 4 because feature maps are 4 times less than input
+            // Multiple by 4 because feature maps are 4 time less than input
             // image.
             float offsetX = x * 4.0f, offsetY = y * 4.0f;
             float angle = anglesData[x];
@@ -158,4 +76,82 @@ void decode(const cv::Mat& scores, const cv::Mat& geometry, float scoreThresh,
             confidences.push_back(score);
         }
     }
+}
+
+int main(int argc, char** argv) {
+   /* Note:
+           Tesseract is a popular text recognition model that maps an image of
+      text to the actual content text. tesseract requires a bounded region
+      within which to search for text. east text detection will detect and
+      bound the region containing text. tesseract can then search within that
+      region for text.
+   */
+
+   /* References:
+   https://docs.opencv.org/master/db/da4/samples_2dnn_2text_detection_8cpp-example.html
+   */
+
+   /* ======================================= text-detection =======================================*/
+
+float confThreshold = CONFIDENCE_THRESHOLD;
+float nmsThreshold = NON_MAX_SUPPRESSION_THRESHOLD;
+int inpWidth = WIDTH;
+int inpHeight = HEIGHT;
+String model = MODEL;
+CV_Assert(!model.empty());
+// Load network.
+Net net = readNet(model);
+static const std::string kWinName =
+    "EAST: An Efficient and Accurate Scene Text Detector";
+namedWindow(kWinName, WINDOW_NORMAL);
+// Specify the output layers for the network
+std::vector<Mat> outs;
+std::vector<String> outNames(2);
+outNames[0] = "feature_fusion/Conv_7/Sigmoid"; // Geometry
+outNames[1] = "feature_fusion/concat_3"; // Confidence
+Mat frame, blob;
+// Load in a test image
+const std::string path_to_images = PATH_TO_TEST_IMAGES;
+const std::string image1 = path_to_images + TEST_IMAGE_1;
+frame = cv::imread(image1);
+/* Preprocesses an image.
+      The link below explains exactly how this works, but essentially,
+      preprocessing is a multi-step process that "helps combat illumination changes"
+  https://www.pyimagesearch.com/2017/11/06/deep-learning-opencvs-blobfromimage-works/
+  */
+blobFromImage(frame, blob, 1.0, Size(inpWidth, inpHeight),
+            cv::mean(frame), true, false);
+// Pass the input image through the network and obtain geometry and confidence scores
+net.setInput(blob);
+net.forward(outs, outNames);
+Mat scores = outs[0];
+Mat geometry = outs[1];
+// Decode predicted bounding boxes.
+std::vector<RotatedRect> boxes;
+std::vector<float> confidences;
+decode(scores, geometry, confThreshold, boxes, confidences);
+// Filter out the best candidates for the correct text box using non-maximum suppression
+std::vector<int> indices;
+NMSBoxes(boxes, confidences, confThreshold, nmsThreshold, indices);
+// Render detections.
+Point2f ratio((float)frame.cols / inpWidth, (float)frame.rows / inpHeight);
+for (size_t i = 0; i < indices.size(); ++i) {
+    RotatedRect& box = boxes[indices[i]];
+    Point2f vertices[4];
+    box.points(vertices);
+    for (int j = 0; j < 4; ++j) {
+        vertices[j].x *= ratio.x;
+        vertices[j].y *= ratio.y;
+    }
+    for (int j = 0; j < 4; ++j)
+        line(frame, vertices[j], vertices[(j + 1) % 4], Scalar(0, 255, 0),
+            1);
+}
+
+// Detected
+
+imshow(kWinName, frame);
+cv::waitKey(0);
+
+ return 0;
 }
