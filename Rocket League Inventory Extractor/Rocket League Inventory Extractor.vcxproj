@@ -75,8 +75,8 @@
     <TargetName>$(ProjectName)_debug</TargetName>
     <LinkIncremental>true</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
-    <IncludePath>C:\OpenCV4\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\OpenCV4\x64\vc16\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\OpenCV4\include;C:\Dev\vcpkg\installed\x64-windows\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\OpenCV4\x64\vc16\lib;C:\Dev\vcpkg\installed\x64-windows\debug\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>bin\</OutDir>
@@ -84,21 +84,21 @@
     <TargetName>$(ProjectName)_debug</TargetName>
     <LinkIncremental>true</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
-    <IncludePath>C:\OpenCV4\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\OpenCV4\x64\vc16\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\OpenCV4\include;C:\Dev\vcpkg\installed\x64-windows\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\OpenCV4\x64\vc16\lib;C:\Dev\vcpkg\installed\x64-windows\debug\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>bin\</OutDir>
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\OpenCV4\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\OpenCV4\include;C:\Dev\vcpkg\installed\x64-windows\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\OpenCV4\x64\vc16\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>bin\</OutDir>
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\OpenCV4\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\OpenCV4\include;C:\Dev\vcpkg\installed\x64-windows\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\OpenCV4\x64\vc16\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -108,7 +108,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>C:\OpenCV4\include;C:\Dev\opencv-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\OpenCV4\include;C:\Dev\opencv-master\include;%(AdditionalIncludeDirectories);C:\Dev\tesseract\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
@@ -116,8 +116,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>opencv_aruco412d.lib;opencv_bgsegm412d.lib;opencv_bioinspired412d.lib;opencv_calib3d412d.lib;opencv_ccalib412d.lib;opencv_core412d.lib;opencv_datasets412d.lib;opencv_dnn412d.lib;opencv_dnn_objdetect412d.lib;opencv_dnn_superres412d.lib;opencv_dpm412d.lib;opencv_face412d.lib;opencv_features2d412d.lib;opencv_flann412d.lib;opencv_fuzzy412d.lib;opencv_gapi412d.lib;opencv_hfs412d.lib;opencv_highgui412d.lib;opencv_imgcodecs412d.lib;opencv_imgproc412d.lib;opencv_img_hash412d.lib;opencv_line_descriptor412d.lib;opencv_ml412d.lib;opencv_objdetect412d.lib;opencv_optflow412d.lib;opencv_phase_unwrapping412d.lib;opencv_photo412d.lib;opencv_plot412d.lib;opencv_quality412d.lib;opencv_reg412d.lib;opencv_rgbd412d.lib;opencv_saliency412d.lib;opencv_shape412d.lib;opencv_stereo412d.lib;opencv_stitching412d.lib;opencv_structured_light412d.lib;opencv_superres412d.lib;opencv_surface_matching412d.lib;opencv_text412d.lib;opencv_tracking412d.lib;opencv_video412d.lib;opencv_videoio412d.lib;opencv_videostab412d.lib;opencv_xfeatures2d412d.lib;opencv_ximgproc412d.lib;opencv_xobjdetect412d.lib;opencv_xphoto412d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\OpenCV4\x64\vc16\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_aruco412d.lib;opencv_bgsegm412d.lib;opencv_bioinspired412d.lib;opencv_calib3d412d.lib;opencv_ccalib412d.lib;opencv_core412d.lib;opencv_datasets412d.lib;opencv_dnn412d.lib;opencv_dnn_objdetect412d.lib;opencv_dnn_superres412d.lib;opencv_dpm412d.lib;opencv_face412d.lib;opencv_features2d412d.lib;opencv_flann412d.lib;opencv_fuzzy412d.lib;opencv_gapi412d.lib;opencv_hfs412d.lib;opencv_highgui412d.lib;opencv_imgcodecs412d.lib;opencv_imgproc412d.lib;opencv_img_hash412d.lib;opencv_line_descriptor412d.lib;opencv_ml412d.lib;opencv_objdetect412d.lib;opencv_optflow412d.lib;opencv_phase_unwrapping412d.lib;opencv_photo412d.lib;opencv_plot412d.lib;opencv_quality412d.lib;opencv_reg412d.lib;opencv_rgbd412d.lib;opencv_saliency412d.lib;opencv_shape412d.lib;opencv_stereo412d.lib;opencv_stitching412d.lib;opencv_structured_light412d.lib;opencv_superres412d.lib;opencv_surface_matching412d.lib;opencv_text412d.lib;opencv_tracking412d.lib;opencv_video412d.lib;opencv_videoio412d.lib;opencv_videostab412d.lib;opencv_xfeatures2d412d.lib;opencv_ximgproc412d.lib;opencv_xobjdetect412d.lib;opencv_xphoto412d.lib;GlU32.Lib;jpegd.lib;jsoncpp.lib;leptonica-1.78.0d.lib;libpng16d.lib;libprotobuf-lited.lib;libprotobufd.lib;libprotocd.lib;lzmad.lib;OpenGL32.Lib;tesseract41d.lib;tiffd.lib;tiffxxd.lib;turbojpegd.lib;webpd.lib;webpdecoderd.lib;webpdemuxd.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\OpenCV4\x64\vc16\lib;C:\Dev\tesseract\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -128,7 +128,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>C:\OpenCV4\include;C:\Dev\opencv-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\OpenCV4\include;C:\Dev\opencv-master\include;%(AdditionalIncludeDirectories);C:\Dev\tesseract\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -137,8 +137,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>opencv_aruco412d.lib;opencv_bgsegm412d.lib;opencv_bioinspired412d.lib;opencv_calib3d412d.lib;opencv_ccalib412d.lib;opencv_core412d.lib;opencv_datasets412d.lib;opencv_dnn412d.lib;opencv_dnn_objdetect412d.lib;opencv_dnn_superres412d.lib;opencv_dpm412d.lib;opencv_face412d.lib;opencv_features2d412d.lib;opencv_flann412d.lib;opencv_fuzzy412d.lib;opencv_gapi412d.lib;opencv_hfs412d.lib;opencv_highgui412d.lib;opencv_imgcodecs412d.lib;opencv_imgproc412d.lib;opencv_img_hash412d.lib;opencv_line_descriptor412d.lib;opencv_ml412d.lib;opencv_objdetect412d.lib;opencv_optflow412d.lib;opencv_phase_unwrapping412d.lib;opencv_photo412d.lib;opencv_plot412d.lib;opencv_quality412d.lib;opencv_reg412d.lib;opencv_rgbd412d.lib;opencv_saliency412d.lib;opencv_shape412d.lib;opencv_stereo412d.lib;opencv_stitching412d.lib;opencv_structured_light412d.lib;opencv_superres412d.lib;opencv_surface_matching412d.lib;opencv_text412d.lib;opencv_tracking412d.lib;opencv_video412d.lib;opencv_videoio412d.lib;opencv_videostab412d.lib;opencv_xfeatures2d412d.lib;opencv_ximgproc412d.lib;opencv_xobjdetect412d.lib;opencv_xphoto412d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\OpenCV4\x64\vc16\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_aruco412d.lib;opencv_bgsegm412d.lib;opencv_bioinspired412d.lib;opencv_calib3d412d.lib;opencv_ccalib412d.lib;opencv_core412d.lib;opencv_datasets412d.lib;opencv_dnn412d.lib;opencv_dnn_objdetect412d.lib;opencv_dnn_superres412d.lib;opencv_dpm412d.lib;opencv_face412d.lib;opencv_features2d412d.lib;opencv_flann412d.lib;opencv_fuzzy412d.lib;opencv_gapi412d.lib;opencv_hfs412d.lib;opencv_highgui412d.lib;opencv_imgcodecs412d.lib;opencv_imgproc412d.lib;opencv_img_hash412d.lib;opencv_line_descriptor412d.lib;opencv_ml412d.lib;opencv_objdetect412d.lib;opencv_optflow412d.lib;opencv_phase_unwrapping412d.lib;opencv_photo412d.lib;opencv_plot412d.lib;opencv_quality412d.lib;opencv_reg412d.lib;opencv_rgbd412d.lib;opencv_saliency412d.lib;opencv_shape412d.lib;opencv_stereo412d.lib;opencv_stitching412d.lib;opencv_structured_light412d.lib;opencv_superres412d.lib;opencv_surface_matching412d.lib;opencv_text412d.lib;opencv_tracking412d.lib;opencv_video412d.lib;opencv_videoio412d.lib;opencv_videostab412d.lib;opencv_xfeatures2d412d.lib;opencv_ximgproc412d.lib;opencv_xobjdetect412d.lib;opencv_xphoto412d.lib;GlU32.Lib;jpegd.lib;jsoncpp.lib;leptonica-1.78.0d.lib;libpng16d.lib;libprotobuf-lited.lib;libprotobufd.lib;libprotocd.lib;lzmad.lib;OpenGL32.Lib;tesseract41d.lib;tiffd.lib;tiffxxd.lib;turbojpegd.lib;webpd.lib;webpdecoderd.lib;webpdemuxd.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\OpenCV4\x64\vc16\lib;C:\Dev\tesseract\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -148,7 +148,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);C:\Dev\tesseract\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -159,8 +159,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>opencv_aruco412.lib;opencv_bgsegm412.lib;opencv_bioinspired412.lib;opencv_calib3d412.lib;opencv_ccalib412.lib;opencv_core412.lib;opencv_datasets412.lib;opencv_dnn412.lib;opencv_dnn_objdetect412.lib;opencv_dnn_superres412.lib;opencv_dpm412.lib;opencv_face412.lib;opencv_features2d412.lib;opencv_flann412.lib;opencv_fuzzy412.lib;opencv_gapi412.lib;opencv_hfs412.lib;opencv_highgui412.lib;opencv_imgcodecs412.lib;opencv_imgproc412.lib;opencv_img_hash412.lib;opencv_line_descriptor412.lib;opencv_ml412.lib;opencv_objdetect412.lib;opencv_optflow412.lib;opencv_phase_unwrapping412.lib;opencv_photo412.lib;opencv_plot412.lib;opencv_quality412.lib;opencv_reg412.lib;opencv_rgbd412.lib;opencv_saliency412.lib;opencv_shape412.lib;opencv_stereo412.lib;opencv_stitching412.lib;opencv_structured_light412.lib;opencv_superres412.lib;opencv_surface_matching412.lib;opencv_text412.lib;opencv_tracking412.lib;opencv_video412.lib;opencv_videoio412.lib;opencv_videostab412.lib;opencv_xfeatures2d412.lib;opencv_ximgproc412.lib;opencv_xobjdetect412.lib;opencv_xphoto412.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\OpenCV4\x64\vc16\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_aruco412.lib;opencv_bgsegm412.lib;opencv_bioinspired412.lib;opencv_calib3d412.lib;opencv_ccalib412.lib;opencv_core412.lib;opencv_datasets412.lib;opencv_dnn412.lib;opencv_dnn_objdetect412.lib;opencv_dnn_superres412.lib;opencv_dpm412.lib;opencv_face412.lib;opencv_features2d412.lib;opencv_flann412.lib;opencv_fuzzy412.lib;opencv_gapi412.lib;opencv_hfs412.lib;opencv_highgui412.lib;opencv_imgcodecs412.lib;opencv_imgproc412.lib;opencv_img_hash412.lib;opencv_line_descriptor412.lib;opencv_ml412.lib;opencv_objdetect412.lib;opencv_optflow412.lib;opencv_phase_unwrapping412.lib;opencv_photo412.lib;opencv_plot412.lib;opencv_quality412.lib;opencv_reg412.lib;opencv_rgbd412.lib;opencv_saliency412.lib;opencv_shape412.lib;opencv_stereo412.lib;opencv_stitching412.lib;opencv_structured_light412.lib;opencv_superres412.lib;opencv_surface_matching412.lib;opencv_text412.lib;opencv_tracking412.lib;opencv_video412.lib;opencv_videoio412.lib;opencv_videostab412.lib;opencv_xfeatures2d412.lib;opencv_ximgproc412.lib;opencv_xobjdetect412.lib;opencv_xphoto412.libgif.lib;GlU32.Lib;jpegd.lib;jsoncpp.lib;leptonica-1.78.0d.lib;libpng16d.lib;libprotobuf-lited.lib;libprotobufd.lib;libprotocd.lib;lzmad.lib;OpenGL32.Lib;tesseract41d.lib;tiffd.lib;tiffxxd.lib;turbojpegd.lib;webpd.lib;webpdecoderd.lib;webpdemuxd.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\OpenCV4\x64\vc16\lib;C:\Dev\vcpkg\installed\x64-windows\debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -170,7 +170,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);C:\Dev\tesseract\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
@@ -180,12 +180,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>opencv_aruco412.lib;opencv_bgsegm412.lib;opencv_bioinspired412.lib;opencv_calib3d412.lib;opencv_ccalib412.lib;opencv_core412.lib;opencv_datasets412.lib;opencv_dnn412.lib;opencv_dnn_objdetect412.lib;opencv_dnn_superres412.lib;opencv_dpm412.lib;opencv_face412.lib;opencv_features2d412.lib;opencv_flann412.lib;opencv_fuzzy412.lib;opencv_gapi412.lib;opencv_hfs412.lib;opencv_highgui412.lib;opencv_imgcodecs412.lib;opencv_imgproc412.lib;opencv_img_hash412.lib;opencv_line_descriptor412.lib;opencv_ml412.lib;opencv_objdetect412.lib;opencv_optflow412.lib;opencv_phase_unwrapping412.lib;opencv_photo412.lib;opencv_plot412.lib;opencv_quality412.lib;opencv_reg412.lib;opencv_rgbd412.lib;opencv_saliency412.lib;opencv_shape412.lib;opencv_stereo412.lib;opencv_stitching412.lib;opencv_structured_light412.lib;opencv_superres412.lib;opencv_surface_matching412.lib;opencv_text412.lib;opencv_tracking412.lib;opencv_video412.lib;opencv_videoio412.lib;opencv_videostab412.lib;opencv_xfeatures2d412.lib;opencv_ximgproc412.lib;opencv_xobjdetect412.lib;opencv_xphoto412.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\OpenCV4\x64\vc16\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_aruco412.lib;opencv_bgsegm412.lib;opencv_bioinspired412.lib;opencv_calib3d412.lib;opencv_ccalib412.lib;opencv_core412.lib;opencv_datasets412.lib;opencv_dnn412.lib;opencv_dnn_objdetect412.lib;opencv_dnn_superres412.lib;opencv_dpm412.lib;opencv_face412.lib;opencv_features2d412.lib;opencv_flann412.lib;opencv_fuzzy412.lib;opencv_gapi412.lib;opencv_hfs412.lib;opencv_highgui412.lib;opencv_imgcodecs412.lib;opencv_imgproc412.lib;opencv_img_hash412.lib;opencv_line_descriptor412.lib;opencv_ml412.lib;opencv_objdetect412.lib;opencv_optflow412.lib;opencv_phase_unwrapping412.lib;opencv_photo412.lib;opencv_plot412.lib;opencv_quality412.lib;opencv_reg412.lib;opencv_rgbd412.lib;opencv_saliency412.lib;opencv_shape412.lib;opencv_stereo412.lib;opencv_stitching412.lib;opencv_structured_light412.lib;opencv_superres412.lib;opencv_surface_matching412.lib;opencv_text412.lib;opencv_tracking412.lib;opencv_video412.lib;opencv_videoio412.lib;opencv_videostab412.lib;opencv_xfeatures2d412.lib;opencv_ximgproc412.lib;opencv_xobjdetect412.lib;opencv_xphoto412.libgif.lib;GlU32.Lib;jpegd.lib;jsoncpp.lib;leptonica-1.78.0d.lib;libpng16d.lib;libprotobuf-lited.lib;libprotobufd.lib;libprotocd.lib;lzmad.lib;OpenGL32.Lib;tesseract41d.lib;tiffd.lib;tiffxxd.lib;turbojpegd.lib;webpd.lib;webpdecoderd.lib;webpdemuxd.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\OpenCV4\x64\vc16\lib;C:\Dev\vcpkg\installed\x64-windows\debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\InventoryItem.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
   </ItemGroup>
