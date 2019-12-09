@@ -6,7 +6,13 @@ Prices referenced from rl.insider.gg
 
 #include <string>
 #include <fstream>
+#include <iostream>
 #include "ItemDatabase.h"
+
+// Default constuctor - for suppessing warnings
+ItemDatabase::ItemDatabase() { 
+	IsValidDatabase_ = false; 
+}
 
 // Custom constructor that takes in a file path to a JSON database
 ItemDatabase::ItemDatabase(std::string path_to_database_json) {
@@ -126,6 +132,24 @@ std::string ItemDatabase::Sanitize(std::string &input_string) const {
             if (input_string[i] != ' ') sanitized << input_string[i];
         }
         return sanitized.str();
+}
+
+// Returns the name of all items in the database
+std::vector<std::string> & ItemDatabase::GetAllNames() const {
+    std::vector<std::string> names;
+    if (IsValidDatabase_) {
+        int count = 0;
+
+		// Push the full name of every item
+        for (Json::ValueConstIterator it = database_.begin(); it != database_.end() && it.name() != "0"; ++it) {
+            names.push_back(GetFullNameOf(it.name()));
+        }
+
+		// Pop the null terminator
+        names.pop_back();
+        std::cout << count << std::endl;
+	}
+    return names;
 }
 
 // Returns whether the database link was valid

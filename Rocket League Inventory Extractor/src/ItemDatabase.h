@@ -11,6 +11,9 @@ Prices referenced from rl.insider.gg
 
 class ItemDatabase {
    public:
+	// Default constuctor - for suppessing warnings
+    ItemDatabase();
+
 	// Custom constructor that takes in a file path to a JSON database
     ItemDatabase(std::string path_to_database_json);
 
@@ -29,6 +32,9 @@ class ItemDatabase {
 
 	// Returns the full, pretty name of the item
     std::string GetFullNameOf(std::string item_name) const;
+
+	// Returns the name of all items in the database
+	std::vector<std::string> & GetAllNames() const;
 
 	// Returns whether the database link was valid 
 	bool IsValidDatabase() const;
