@@ -116,6 +116,8 @@ std::string ItemDatabase::GetFullNameOf(std::string item_name) const {
         try {
             // Get type of object
             std::string name = database_[item]["name"].asString();
+
+            if (name.empty()) return "-1";
             return name;
         } catch (const std::runtime_error &) {
             // This block is reached if the item does not exist
