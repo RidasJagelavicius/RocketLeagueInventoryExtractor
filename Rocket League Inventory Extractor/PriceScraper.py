@@ -58,7 +58,7 @@ def main():
                     color_price = color_price.replace('\u2014','').replace('\u2003','') # Sanitize scraped hyphens
                 painted[color] = color_price
             table['prices'] = painted
-            prices[table['name'].replace(" ", "").lower()] = table
+            prices[table['name'].replace(" ", "").replace("-","").lower()] = table
         print("Generated prices")  
         
     #Otherwise there are errors
