@@ -34,7 +34,7 @@ class ItemDatabase {
     std::string GetFullNameOf(std::string item_name) const;
 
 	// Returns the name of all items in the database
-	std::vector<std::string> & GetAllNames() const;
+	std::vector<std::string> GetAllNames() const;
 
 	// Returns whether the database link was valid 
 	bool IsValidDatabase() const;

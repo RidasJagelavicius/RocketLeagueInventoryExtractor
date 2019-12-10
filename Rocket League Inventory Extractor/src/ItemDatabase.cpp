@@ -135,10 +135,9 @@ std::string ItemDatabase::Sanitize(std::string &input_string) const {
 }
 
 // Returns the name of all items in the database
-std::vector<std::string> & ItemDatabase::GetAllNames() const {
+std::vector<std::string> ItemDatabase::GetAllNames() const {
     std::vector<std::string> names;
     if (IsValidDatabase_) {
-        int count = 0;
 
 		// Push the full name of every item
         for (Json::ValueConstIterator it = database_.begin(); it != database_.end() && it.name() != "0"; ++it) {
@@ -146,8 +145,7 @@ std::vector<std::string> & ItemDatabase::GetAllNames() const {
         }
 
 		// Pop the null terminator
-        names.pop_back();
-        std::cout << count << std::endl;
+       names.pop_back();
 	}
     return names;
 }
