@@ -142,7 +142,7 @@ double InventoryItem::GetPriceUpperBound() const {
     for (unsigned i = 0; i < price_.size(); i++) {
         if (!is_upper && price_[i] == '-')
             is_upper = true;
-        if (is_upper)
+        else if (is_upper)
             upper_bound << price_[i];
     }
 

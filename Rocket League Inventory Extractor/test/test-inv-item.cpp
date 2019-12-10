@@ -1,5 +1,6 @@
-#include "catch.hpp"
-#include "InventoryItem.h"
+#define CATCH_CONFIG_MAIN
+#include "../catch.hpp"
+#include "../src/InventoryItem.h"
 
 InventoryItem i1("Test Item 1");
 InventoryItem i2("Test Item 2", "Black");
@@ -34,12 +35,14 @@ TEST_CASE("GetColor returns the color of colored items") {
 
 TEST_CASE("GetPriceLowerBound returns the lower bound of the price") {
     double price = i5.GetPriceLowerBound();
-    REQUIRE(price < 0.6 && price > 0.4);
+    REQUIRE(price < 0.6);
+    REQUIRE(price > 0.4);
 }
 
 TEST_CASE("GetPriceUpperBound returns the upper bound of the price") {
     double price = i5.GetPriceUpperBound();
-    REQUIRE(price < 11 && price > 9);
+    REQUIRE(price < 11);
+    REQUIRE(price > 9);
 }
 
 TEST_CASE("Negative quantities return -1") { 
