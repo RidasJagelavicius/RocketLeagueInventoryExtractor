@@ -32,7 +32,8 @@ ItemDatabase::ItemDatabase(std::string path_to_database_json) {
 
 // Returns the price of the default color of an item or -1 if it does not exist, or -2 if the file path was invalid
 std::string ItemDatabase::GetPriceOf(std::string item_name) const {
-    if (!IsValidDatabase_) return "-2";
+    if (!IsValidDatabase_) 
+        return "-2";
     else {
         std::string item = ItemDatabase::Sanitize(item_name);
 
@@ -78,8 +79,8 @@ std::string ItemDatabase::GetRarityOf(std::string item_name) const {
 
         try {
             // Get rarity of object
-            std::string price = database_[item]["rarity"].asString();
-            return price;
+            std::string rarity = database_[item]["rarity"].asString();
+            return rarity;
         } catch (const std::runtime_error &) {
             // This block is reached if the item does not exist
             return "-1";
@@ -96,8 +97,8 @@ std::string ItemDatabase::GetTypeOf(std::string item_name) const {
 
         try {
             // Get type of object
-            std::string price = database_[item]["type"].asString();
-            return price;
+            std::string type = database_[item]["type"].asString();
+            return type;
         } catch (const std::runtime_error &) {
             // This block is reached if the item does not exist
             return "-1";
@@ -114,8 +115,8 @@ std::string ItemDatabase::GetFullNameOf(std::string item_name) const {
 
         try {
             // Get type of object
-            std::string price = database_[item]["name"].asString();
-            return price;
+            std::string name = database_[item]["name"].asString();
+            return name;
         } catch (const std::runtime_error &) {
             // This block is reached if the item does not exist
             return "-1";
@@ -143,9 +144,6 @@ std::vector<std::string> ItemDatabase::GetAllNames() const {
         for (Json::ValueConstIterator it = database_.begin(); it != database_.end() && it.name() != "0"; ++it) {
             names.push_back(GetFullNameOf(it.name()));
         }
-
-		// Pop the null terminator
-       names.pop_back();
 	}
     return names;
 }
