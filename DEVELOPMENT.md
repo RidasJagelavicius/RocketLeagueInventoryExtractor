@@ -24,3 +24,11 @@
    1. Here are the resources that DID fix the openCV issue:
       1. Install OpenCV and extra contrib files and make with CMake: https://www.youtube.com/watch?v=x5EWlNQ6z5w&t=317s (Build and Install OpenCV 4 on Windows 10 | Adam Hacks)
       1. Link OpenCV to path variable and bin/libraries/includes with Visual Studio: https://www.youtube.com/watch?v=p-6rG6Zgu4U&t=332s (Create an OpenCV 4 Project in Visual Studio [C++] | Adam Hacks)
+
+# Week 4:
+1. Log/Implemented:
+   1. Successfully extract SOME text using tesseract
+   1. Successfully linked catch.hpp and tested all files
+   1. Created ItemClassifier API to modularize text detection and recognition, in addition to added functionality
+1. Conflicts:
+   1. Tesseract has difficulty extracting text from some images. I suspect this is because the color of the text almost matches its background and subtracting the mean of the image is insufficient.
