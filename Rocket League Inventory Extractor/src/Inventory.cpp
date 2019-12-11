@@ -172,8 +172,11 @@ void Inventory::PrettyPrint() const {
       const std::vector<InventoryItem>& items = it->second;
 
       // Print header
-      std::string category = type + "s";
-      std::cout << "==============================  " << category << "  ==============================" << std::endl;
+      std::cout << std::endl;
+      if(type[type.size()-1] != 's')
+        type += "s";
+      std::cout << "==============================  " << type
+                << "  ==============================" << std::endl;
 
       // Print each item
       for (std::vector<InventoryItem>::const_iterator iter = items.begin();
@@ -189,6 +192,10 @@ void Inventory::PrettyPrint() const {
 // Prints out a list of items with lower bound prices listed
 void Inventory::PrintBuyingList() const {
 
+    std::cout << "                             "
+              << "BUYING ITEMS"
+              << "                               " << std::endl;
+
     // Iterate through typeMap
     for (std::unordered_map<std::string,
                             std::vector<InventoryItem>>::const_iterator it =
@@ -198,8 +205,9 @@ void Inventory::PrintBuyingList() const {
         const std::vector<InventoryItem>& items = it->second;
 
         // Print header
-        std::string category = type + "s";
-        std::cout << "==============================  " << category
+        std::cout << std::endl;
+        if (type[type.size() - 1] != 's') type += "s";
+        std::cout << "==============================  " << type
                   << "  ==============================" << std::endl;
 
         // Print each item (W = Want, H = Have, k = keys)
@@ -216,6 +224,10 @@ void Inventory::PrintBuyingList() const {
 // Prints out a list of items with upper bound prices listed
 void Inventory::PrintSellingList() const {
 
+    std::cout << "                             "
+              << "SELLING ITEMS"
+              << "                               " << std::endl;
+
     // Iterate through typeMap
     for (std::unordered_map<std::string,
                             std::vector<InventoryItem>>::const_iterator it =
@@ -225,8 +237,9 @@ void Inventory::PrintSellingList() const {
         const std::vector<InventoryItem>& items = it->second;
 
         // Print header
-        std::string category = type + "s";
-        std::cout << "==============================  " << category
+        std::cout << std::endl;
+        if (type[type.size() - 1] != 's') type += "s";
+        std::cout << "==============================  " << type
                   << "  ==============================" << std::endl;
 
         // Print each item (W = Want, H = Have, k = keys)
