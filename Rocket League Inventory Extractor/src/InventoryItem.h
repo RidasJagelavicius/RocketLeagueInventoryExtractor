@@ -89,6 +89,9 @@ class InventoryItem {
 	// Set the new price range of the item ex. UpdatePrice("2-5");
 	void UpdatePrice(std::string price_range);
 
+  // Determines whether two items have the same properties
+  bool operator==(const InventoryItem& rhs) const;
+
 	private:
 		 std::string name_; // Name of the item ex. "20XX"
          std::string certification_; // Base certification of the item ex. "Striker"

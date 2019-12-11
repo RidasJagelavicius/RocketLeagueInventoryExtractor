@@ -8,6 +8,8 @@ InventoryItem i3("Test Item 3", "Acrobat", "Black");
 InventoryItem i4("Test Item 4", "Acrobat", "Black", true, 2);
 InventoryItem i5("Test Item 5", "Acrobat", "Black", "Rare", true, "Decal", 2,
                  "0.5-10");
+InventoryItem i6("Test Item 5", "Acrobat", "Black", "Rare", true, "Decal", 2,
+                 "0.5-10");
 
 TEST_CASE("GetName returns the name of the item") {
     REQUIRE(i1.GetName() == "Test Item 1");
@@ -48,4 +50,12 @@ TEST_CASE("GetPriceUpperBound returns the upper bound of the price") {
 TEST_CASE("Negative quantities return -1") { 
 	i1.UpdateQuantity(-500);
     REQUIRE(i1.GetQuantity() == -1);
+}
+
+TEST_CASE("operator== returns false for two unequal items") {
+    REQUIRE(!(i4 == i5));
+}
+
+TEST_CASE("operator== returns true for two equal items") {
+    REQUIRE(i6 == i5);
 }

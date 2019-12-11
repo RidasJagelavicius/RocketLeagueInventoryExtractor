@@ -170,3 +170,11 @@ std::string InventoryItem::GetPriceRange() const {
 void InventoryItem::UpdatePrice(std::string price_range) {
     price_ = price_range;
 }
+
+// Determines whether two items have the same properties
+bool InventoryItem::operator==(const InventoryItem& rhs) const{
+    return name_ == rhs.GetName() && certification_ == rhs.GetCertification() 
+    && paint_ == rhs.GetColor() && rarity_ == rhs.GetRarity() && 
+    tradable_ == rhs.IsTradable() && type_ == rhs.GetType() && 
+    quantity_ == rhs.GetQuantity() && price_ == rhs.GetPriceRange();
+}
