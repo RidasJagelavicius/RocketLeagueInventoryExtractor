@@ -175,6 +175,5 @@ void InventoryItem::UpdatePrice(std::string price_range) {
 bool InventoryItem::operator==(const InventoryItem& rhs) const{
     return name_ == rhs.GetName() && certification_ == rhs.GetCertification() 
     && paint_ == rhs.GetColor() && rarity_ == rhs.GetRarity() && 
-    tradable_ == rhs.IsTradable() && type_ == rhs.GetType() && 
-    price_ == rhs.GetPriceRange();
+    tradable_ == rhs.IsTradable() && type_ == rhs.GetType();
 }
