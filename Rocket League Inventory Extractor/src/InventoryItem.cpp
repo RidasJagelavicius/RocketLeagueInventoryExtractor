@@ -3,6 +3,7 @@ by Ridas Jagelavicius */
 
 #include <string>
 #include <sstream>
+#include <iostream>
 #include "InventoryItem.h"
 
 InventoryItem::InventoryItem(std::string name)
@@ -110,7 +111,7 @@ std::string InventoryItem::GetRarity() const {
 bool InventoryItem::IsTradable() const {  
 	// An item should also not be traded if no prices have been reported for it yet
 	// A valid price is at least length 3 ("3-4" keys for example)
-    return tradable_ && price_.size() >= 3; }
+    return tradable_; }
 
 // Return the type of the item ex. "Topper"
 std::string InventoryItem::GetType() const { 
@@ -172,7 +173,7 @@ void InventoryItem::UpdatePrice(std::string price_range) {
 }
 
 // Determines whether two items have the same properties
-bool InventoryItem::operator==(const InventoryItem& rhs) const{
+bool InventoryItem::operator==(const InventoryItem& rhs) const {
     return name_ == rhs.GetName() && certification_ == rhs.GetCertification() 
     && paint_ == rhs.GetColor() && rarity_ == rhs.GetRarity() && 
     tradable_ == rhs.IsTradable() && type_ == rhs.GetType();
