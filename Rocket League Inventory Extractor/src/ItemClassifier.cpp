@@ -311,41 +311,73 @@ cv::Rect ItemClassifier::AddPadding(cv::Mat input_image, cv::Rect cropped_box,
 
 // Extracts item paint color from extracted text
  std::string ItemClassifier::ExtractColor(std::vector<std::string>& extracted) {
+     std::string color;
+     bool wasErased; // Prevent skipping an element after erasing
 
-	 // All available colors besides default
+     // All available colors besides default
      std::vector<std::string> colors = {
-         "black",        "white",    "grey",   "crimson", "pink",
-         "cobalt",       "sky blue", "sienna", "saffron", "lime",
-         "forest green", "orange",   "purple"};
+         "black",  "white",   "grey", "crimson", "pink",   "cobalt", "blue",
+         "sienna", "saffron", "lime", "green",   "orange", "purple"};
 
-	 // Search extracted text for color
-     for (std::vector<std::string>::iterator it = extracted.begin();
-          it != extracted.end(); ++it) {
+     // Some color modifiers
+     std::vector<std::string> mods = {"burnt", "forest", "sky"};
 
+     // Search extracted text for color
+     std::vector<std::string>::iterator it = extracted.begin();
+     while (it != extracted.end()) {
          std::string proposed_color = *it;
+         wasErased = false;
 
-		 // Convert to lower case
+         // Convert to lower case
          std::transform(proposed_color.begin(), proposed_color.end(),
                         proposed_color.begin(), ::tolower);
 
-		 // Loop through available colors and search for match
+         // Loop through available colors and search for match
          for (std::vector<std::string>::iterator it2 = colors.begin();
               it2 != colors.end(); ++it2) {
-         
-			 if (proposed_color == *it2) {
-				 // Remove color from extracted text and return it
-                 extracted.erase(it);
+             if (proposed_color == *it2) {
+                 // Remove color from extracted text and return it
+                 it = extracted.erase(it);
+                 wasErased = true;
+                 // Store color
+                 color = *it2;
+                 break;
+             }
+         }
 
-				 // Capitalize first letter and return result
-                 std::string color = *it2;
-                 color[0] = toupper(color[0]);
-                 return color;
-			 }
-		 }
-	 }
+         // Check if reached end after erasing an element
+         if (it == extracted.end()) {
+             break;
+         }
 
-	 return "Default"; // Unpainted
+         // Loop through modifiers and remove the mod
+         for (std::vector<std::string>::iterator it2 = mods.begin();
+              it2 != mods.end(); ++it2) {
+             if (proposed_color == *it2) {
+                 // Remove mod from extracted text
+                 it = extracted.erase(it);
+                 wasErased = true;
+                 break;
+             }
+         }
+
+         if (!color.empty()) {
+            if (color == "sienna")
+               return "Burnt Sienna";
+            if (color == "blue") 
+               return "Sky Blue"; 
+            if (color == "green")
+               return "Forest Green";
+            color[0] = toupper(color[0]);
+            return color;
+         }
+
+         if (it != extracted.end() && !wasErased)
+          ++it;
+     }
+     return "Default";  // Unpainted
  }
+
 
 // Extracts item certifications from extracted text
  std::string ItemClassifier::ExtractCertification(
@@ -404,7 +436,8 @@ cv::Rect ItemClassifier::AddPadding(cv::Mat input_image, cv::Rect cropped_box,
              }
          }
 
-         ++it;
+         if (it != extracted.end()) 
+          ++it;
      }
 
      return extractedCert;

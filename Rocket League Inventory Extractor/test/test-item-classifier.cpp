@@ -30,6 +30,13 @@ TEST_CASE("ExtractColor successfully extracts and removes paints") {
     REQUIRE(extracted.size() == 2);
 }
 
+TEST_CASE("ExtractColor successfully extracts and removes two-word paints") {
+    std::vector<std::string> extracted = {"wildcat", "BURNT", "SIENNA", "ears"};
+    std::string color = classifier.ExtractColor(extracted);
+    REQUIRE(color == "Burnt Sienna");
+    REQUIRE(extracted.size() == 2);
+}
+
 TEST_CASE("ExtractColor returns Default if unpainted item") {
     std::vector<std::string> extracted = {"wildcat", "ears"};
     std::string color = classifier.ExtractColor(extracted);
