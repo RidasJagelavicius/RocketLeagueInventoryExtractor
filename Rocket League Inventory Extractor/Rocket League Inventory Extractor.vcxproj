@@ -186,11 +186,23 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Inventory.cpp" />
     <ClCompile Include="src\InventoryItem.cpp" />
+    <ClCompile Include="src\ItemClassifier.cpp" />
+    <ClCompile Include="src\ItemDatabase.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="test\test-inv-item.cpp" />
+    <ClCompile Include="test\test-inventory.cpp" />
+    <ClCompile Include="test\test-item-classifier.cpp" />
+    <ClCompile Include="test\test-database.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="catch.hpp" />
+    <ClInclude Include="src\Inventory.h" />
+    <ClInclude Include="src\InventoryItem.h" />
+    <ClInclude Include="src\ItemClassifier.h" />
+    <ClInclude Include="src\ItemDatabase.h" />
     <ClInclude Include="src\ofApp.h" />
   </ItemGroup>
   <ItemGroup>
