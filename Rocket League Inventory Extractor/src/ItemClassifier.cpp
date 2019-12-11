@@ -328,9 +328,7 @@ cv::Rect ItemClassifier::AddPadding(cv::Mat input_image, cv::Rect cropped_box,
          std::string proposed_color = *it;
          wasErased = false;
 
-         // Convert to lower case
-         std::transform(proposed_color.begin(), proposed_color.end(),
-                        proposed_color.begin(), ::tolower);
+         Sanitize(proposed_color);
 
          // Loop through available colors and search for match
          for (std::vector<std::string>::iterator it2 = colors.begin();
@@ -361,20 +359,18 @@ cv::Rect ItemClassifier::AddPadding(cv::Mat input_image, cv::Rect cropped_box,
              }
          }
 
-         if (!color.empty()) {
-            if (color == "sienna")
-               return "Burnt Sienna";
-            if (color == "blue") 
-               return "Sky Blue"; 
-            if (color == "green")
-               return "Forest Green";
-            color[0] = toupper(color[0]);
-            return color;
-         }
-
          if (it != extracted.end() && !wasErased)
           ++it;
      }
+
+     if (!color.empty() && it == extracted.end()) {
+         if (color == "sienna") return "Burnt Sienna";
+         if (color == "blue") return "Sky Blue";
+         if (color == "green") return "Forest Green";
+         color[0] = toupper(color[0]);
+         return color;
+     }
+
      return "Default";  // Unpainted
  }
 
@@ -403,9 +399,7 @@ cv::Rect ItemClassifier::AddPadding(cv::Mat input_image, cv::Rect cropped_box,
      while(it != extracted.end()) {
          std::string proposed_cert = *it;
 
-         // Convert to lower case
-         std::transform(proposed_cert.begin(), proposed_cert.end(),
-                        proposed_cert.begin(), ::tolower);
+         Sanitize(proposed_cert);
 
          // Loop through available certs and search for match
          for (std::vector<std::string>::iterator it2 = certs.begin();
@@ -479,17 +473,20 @@ cv::Rect ItemClassifier::AddPadding(cv::Mat input_image, cv::Rect cropped_box,
  void ItemClassifier::Sanitize(std::string& word_or_item) {
 
 	 // Define strange symbols to be removed
-     std::vector<char> toRemove = {'[', ']', '{', '}', '!', '/', '\\','.',':',';','_'};
+     std::vector<char> toRemove = {'\n' ,'[', ']', '{', '}', '!', '/',
+                                   '\\',     '.', ':', ';', '_'};
      
 	 // Sometimes item names look like this "Item - Characteristic"
 	 // In that case, be aware of the extra space after the hyphen
 	 // Because this is 2 words, not 3
 	 bool wasHyphen = false;
 
+   bool wasErased;
 	 // Loop through word or item
      std::string::iterator it = word_or_item.begin();
      while (it != word_or_item.end()) {
-         
+         wasErased = false;
+
 		 // If the previous character was a hyphen, check for a space to remove
          if (wasHyphen) {
 
@@ -505,6 +502,7 @@ cv::Rect ItemClassifier::AddPadding(cv::Mat input_image, cv::Rect cropped_box,
          if (*it == '-') {
             wasHyphen = true;
             it = word_or_item.erase(it);
+            wasErased = true;
             continue;
 		     }
 
@@ -513,12 +511,13 @@ cv::Rect ItemClassifier::AddPadding(cv::Mat input_image, cv::Rect cropped_box,
             it2 != toRemove.end(); ++it2) {
 
 			     if (*it == *it2) {
-                     it = word_or_item.erase(it);
-                     break;
+              it = word_or_item.erase(it);
+              wasErased = true;
+              break;
 			     }
 		     }
 
-         if (it != word_or_item.end())
+         if (it != word_or_item.end() && !wasErased)
 		       ++it;
 	   }
 

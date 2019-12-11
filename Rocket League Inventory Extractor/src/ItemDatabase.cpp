@@ -128,13 +128,38 @@ std::string ItemDatabase::GetFullNameOf(std::string item_name) const {
 
 // Sanitizes input to remove whitespace and convert to lowercase
 std::string ItemDatabase::Sanitize(std::string &input_string) const { 
-	std::stringstream sanitized; 
-	transform(input_string.begin(), input_string.end(),
-                  input_string.begin(), ::tolower);
-        for (unsigned i = 0; i < input_string.size(); i++) {
-            if (input_string[i] != ' ') sanitized << input_string[i];
+
+  // Copy input string
+    std::string word_or_item = input_string;
+
+	// Define strange symbols to be removed
+    std::vector<char> toRemove = {'\n', '-', ' ' ,'[', ']', '{', '}', '!',
+                                  '/',  '\\', '.', ':', ';', '_'};
+
+    bool wasErased;
+    // Loop through word or item
+    std::string::iterator it = word_or_item.begin();
+    while (it != word_or_item.end()) {
+        wasErased = false;
+
+        // Remove any strange characters
+        for (std::vector<char>::iterator it2 = toRemove.begin();
+             it2 != toRemove.end(); ++it2) {
+            if (*it == *it2) {
+                it = word_or_item.erase(it);
+                wasErased = true;
+                break;
+            }
         }
-        return sanitized.str();
+
+        if (it != word_or_item.end() && !wasErased) ++it;
+    }
+
+    // Convert word to lowercase
+    std::transform(word_or_item.begin(), word_or_item.end(),
+                   word_or_item.begin(), ::tolower);
+
+    return word_or_item;
 }
 
 // Returns the name of all items in the database
