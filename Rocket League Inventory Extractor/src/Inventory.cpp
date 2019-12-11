@@ -14,10 +14,17 @@ Inventory::Inventory() {
 }
 
 // Custom ctor
-Inventory::Inventory(std::vector<InventoryItem> items) {
+Inventory::Inventory(std::string path_to_database) {
+    database_ = ItemDatabase(path_to_database);
+}
+
+// Custom ctor
+Inventory::Inventory(std::vector<InventoryItem> items,
+                     std::string path_to_database) {
  for (const InventoryItem & item : items) {
   AddItem(item);
  }
+ database_ = ItemDatabase(path_to_database);
 }
 
 // Returns the total estimated key value (lower bound) of inventory
@@ -39,7 +46,7 @@ void Inventory::AddItem(const InventoryItem& item) {
     std::vector<InventoryItem>::iterator it = FindItem(item);
 
     // Add to typeMap
-    std::string type = item.GetType();
+    std::string type = database_.GetTypeOf(item.GetName());
     if (type != "-1" && type != "-2") {
       
       std::unordered_map<std::string, std::vector<InventoryItem>>::iterator
@@ -87,7 +94,7 @@ void Inventory::RemoveItem(const InventoryItem& itemToRemove) {
   std::vector<InventoryItem>::iterator it = FindItem(itemToRemove);
 
   // Remove from typeMap
-  std::string type = itemToRemove.GetType();
+  std::string type = database_.GetTypeOf(itemToRemove.GetName());
   if (type != "-1" && type != "-2") {
       std::unordered_map<std::string, std::vector<InventoryItem>>::iterator it2 =
           typeMap_.find(type);
@@ -166,7 +173,7 @@ void Inventory::PrettyPrint() const {
 
       // Print header
       std::string category = type + "s";
-      std::cout << "===============  " << category << "  ===============" << std::endl;
+      std::cout << "==============================  " << category << "  ==============================" << std::endl;
 
       // Print each item
       for (std::vector<InventoryItem>::const_iterator iter = items.begin();
@@ -175,7 +182,7 @@ void Inventory::PrettyPrint() const {
         std::cout << " - " << iter->GetColor() << " " << iter->GetCertification() 
         << " " << iter->GetName() << " (" << iter->GetQuantity() << ") "
         << iter->GetPriceRange() << std::endl; 
-        }
+      }
     }
 }
 
@@ -192,14 +199,15 @@ void Inventory::PrintBuyingList() const {
 
         // Print header
         std::string category = type + "s";
-        std::cout << "===============  " << category
-                  << "  ===============" << std::endl;
+        std::cout << "==============================  " << category
+                  << "  ==============================" << std::endl;
 
         // Print each item (W = Want, H = Have, k = keys)
         for (std::vector<InventoryItem>::const_iterator iter = items.begin();
              iter != items.end(); ++iter) {
             std::cout << " W: " << iter->GetColor() << " "
                       << iter->GetCertification() << " " << iter->GetName()
+                      << std::endl << "                               " 
                       << " H: " << std::floor(iter->GetPriceLowerBound()) << "k" << std::endl;
         }
     }
@@ -218,14 +226,16 @@ void Inventory::PrintSellingList() const {
 
         // Print header
         std::string category = type + "s";
-        std::cout << "===============  " << category
-                  << "  ===============" << std::endl;
+        std::cout << "==============================  " << category
+                  << "  ==============================" << std::endl;
 
         // Print each item (W = Want, H = Have, k = keys)
         for (std::vector<InventoryItem>::const_iterator iter = items.begin();
              iter != items.end(); ++iter) {
             std::cout << " H: " << iter->GetColor() << " "
                       << iter->GetCertification() << " " << iter->GetName()
+                      << std::endl
+                      << "                               " 
                       << " W: " << std::round(iter->GetPriceUpperBound()) << "k"
                       << " or offer " << std::endl;
         }

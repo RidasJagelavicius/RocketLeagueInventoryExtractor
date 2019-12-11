@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "InventoryItem.h"
+#include "ItemDatabase.h"
 
 /* Rocket League Inventory API
 by Ridas Jagelavicius */
@@ -15,7 +16,10 @@ class Inventory{
     Inventory();
 
     // Custom ctor
-    Inventory(std::vector<InventoryItem> items);
+    Inventory(std::string path_to_database);
+
+    // Custom ctor
+    Inventory(std::vector<InventoryItem> items, std::string path_to_database);
 
     // Returns the total estimated key value (lower bound) of inventory  
     int GetInventoryWorth();
@@ -44,6 +48,7 @@ class Inventory{
     std::vector<InventoryItem> GetItems();
 
   private:
+    ItemDatabase database_;
     std::vector<InventoryItem> items_; // List of current inventory items
     std::unordered_map<std::string,std::vector<InventoryItem>> typeMap_; // Maps a type (Topper, Antenna) to a vector of that type
     std::vector<InventoryItem>::iterator FindItem(const InventoryItem& item); // Returns an iterator to the passed item or the end if not found
