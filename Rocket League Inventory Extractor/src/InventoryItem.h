@@ -15,6 +15,9 @@ class InventoryItem {
     InventoryItem(std::string name, std::string certification,
                   std::string paint);
 
+  InventoryItem(std::string name, std::string certification,
+  std::string paint, std::string price);
+
 	InventoryItem(std::string name, std::string certification,
                   std::string paint, bool tradable, int quantity);
 

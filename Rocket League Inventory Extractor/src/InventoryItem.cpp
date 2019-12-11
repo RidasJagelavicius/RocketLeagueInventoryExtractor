@@ -40,6 +40,18 @@ InventoryItem::InventoryItem(std::string name, std::string certification,
         /* Nothing */ }
 
 InventoryItem::InventoryItem(std::string name, std::string certification,
+                             std::string paint, std::string price)
+    : name_(name),
+      certification_(certification),
+      paint_(paint),
+      rarity_(""),
+      tradable_(""),
+      type_(""),
+      quantity_(1),
+      price_(price) {
+        /* Nothing */ }
+
+InventoryItem::InventoryItem(std::string name, std::string certification,
                              std::string paint,
               bool tradable, int quantity)
     : name_(name),
