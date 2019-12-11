@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include <iostream>
 
 #include "Inventory.h"
 
@@ -13,8 +14,10 @@ Inventory::Inventory() {
 }
 
 // Custom ctor
-Inventory::Inventory(std::vector<InventoryItem> items) : items_(items) {
- /* Nothing */
+Inventory::Inventory(std::vector<InventoryItem> items) {
+ for (const InventoryItem & item : items) {
+  AddItem(item);
+ }
 }
 
 // Returns the total estimated key value (lower bound) of inventory
@@ -36,15 +39,15 @@ void Inventory::AddItem(const InventoryItem& item) {
     std::vector<InventoryItem>::iterator it = FindItem(item);
 
     // Add to typeMap
-    std::string type = it->GetType();
+    std::string type = item.GetType();
     if (type != "-1" && type != "-2") {
       
       std::unordered_map<std::string, std::vector<InventoryItem>>::iterator
-      it = typeMap_.find(type);
+      it2 = typeMap_.find(type);
 
-      if (it != typeMap_.end()) {
+      if (it2 != typeMap_.end()) {
         // If vector exists, add to it
-        std::vector<InventoryItem> & itemsOfType = it->second;
+        std::vector<InventoryItem> & itemsOfType = it2->second;
 
         bool wasFound = false;
         // Update quantity if item already exists in vector
@@ -84,14 +87,14 @@ void Inventory::RemoveItem(const InventoryItem& itemToRemove) {
   std::vector<InventoryItem>::iterator it = FindItem(itemToRemove);
 
   // Remove from typeMap
-  std::string type = it->GetType();
+  std::string type = itemToRemove.GetType();
   if (type != "-1" && type != "-2") {
-      std::unordered_map<std::string, std::vector<InventoryItem>>::iterator it =
+      std::unordered_map<std::string, std::vector<InventoryItem>>::iterator it2 =
           typeMap_.find(type);
 
-      if (it != typeMap_.end()) {
+      if (it2 != typeMap_.end()) {
           // If vector exists, remove from it
-          std::vector<InventoryItem>& itemsOfType = it->second;
+          std::vector<InventoryItem>& itemsOfType = it2->second;
 
           // Update quantity if item already exists in vector or remove
           for (std::vector<InventoryItem>::iterator iter = itemsOfType.begin();
@@ -103,7 +106,7 @@ void Inventory::RemoveItem(const InventoryItem& itemToRemove) {
                   if (quantity > 1) {
                       iter->UpdateQuantity(quantity - 1);
                   } else {
-                      typeMap_.erase(it);  
+                      typeMap_.erase(it2);  
                   }
                   break;
               }
@@ -127,18 +130,107 @@ void Inventory::RemoveItem(const InventoryItem& itemToRemove) {
 // Updates the price of an item if it exists
 void Inventory::UpdateItemPrice(const InventoryItem& itemToUpdate,
                                 std::string newPrice) {
+    // Update items_
     std::vector<InventoryItem>::iterator it = FindItem(itemToUpdate);
-    it->UpdatePrice(newPrice);
+    if (it != items_.end())
+      it->UpdatePrice(newPrice);
+
+    // Update typeMap_
+    std::string type = itemToUpdate.GetType();
+    std::unordered_map<std::string, std::vector<InventoryItem>>::iterator it2 =
+        typeMap_.find(type);
+
+    if (it2 != typeMap_.end()) {
+        // If vector exists, remove from it
+        std::vector<InventoryItem>& itemsOfType = it2->second;
+
+        // Update quantity if item already exists in vector or remove
+        for (std::vector<InventoryItem>::iterator iter = itemsOfType.begin();
+             iter != itemsOfType.end(); ++iter) {
+            if (*iter == itemToUpdate) {
+                iter->UpdatePrice(newPrice);
+                break;
+            }
+        }
+    }
 }
 
 // Prints out an easy-to-read list of items
-void Inventory::PrettyPrint() const;
+void Inventory::PrettyPrint() const {
+  
+  // Iterate through typeMap
+    for (std::unordered_map<std::string, std::vector<InventoryItem>>::const_iterator
+             it = typeMap_.begin(); it != typeMap_.end(); ++it) {
+      std::string type = it->first;
+      const std::vector<InventoryItem>& items = it->second;
+
+      // Print header
+      std::string category = type + "s";
+      std::cout << "===============  " << category << "  ===============" << std::endl;
+
+      // Print each item
+      for (std::vector<InventoryItem>::const_iterator iter = items.begin();
+        iter != items.end(); ++iter) {
+        
+        std::cout << " - " << iter->GetColor() << " " << iter->GetCertification() 
+        << " " << iter->GetName() << " (" << iter->GetQuantity() << ") "
+        << iter->GetPriceRange() << std::endl; 
+        }
+    }
+}
 
 // Prints out a list of items with lower bound prices listed
-void Inventory::PrintBuyingList() const;
+void Inventory::PrintBuyingList() const {
+
+    // Iterate through typeMap
+    for (std::unordered_map<std::string,
+                            std::vector<InventoryItem>>::const_iterator it =
+             typeMap_.begin();
+         it != typeMap_.end(); ++it) {
+        std::string type = it->first;
+        const std::vector<InventoryItem>& items = it->second;
+
+        // Print header
+        std::string category = type + "s";
+        std::cout << "===============  " << category
+                  << "  ===============" << std::endl;
+
+        // Print each item (W = Want, H = Have, k = keys)
+        for (std::vector<InventoryItem>::const_iterator iter = items.begin();
+             iter != items.end(); ++iter) {
+            std::cout << " W: " << iter->GetColor() << " "
+                      << iter->GetCertification() << " " << iter->GetName()
+                      << " H: " << std::floor(iter->GetPriceLowerBound()) << "k" << std::endl;
+        }
+    }
+}
 
 // Prints out a list of items with upper bound prices listed
-void Inventory::PrintSellingList() const;
+void Inventory::PrintSellingList() const {
+
+    // Iterate through typeMap
+    for (std::unordered_map<std::string,
+                            std::vector<InventoryItem>>::const_iterator it =
+             typeMap_.begin();
+         it != typeMap_.end(); ++it) {
+        std::string type = it->first;
+        const std::vector<InventoryItem>& items = it->second;
+
+        // Print header
+        std::string category = type + "s";
+        std::cout << "===============  " << category
+                  << "  ===============" << std::endl;
+
+        // Print each item (W = Want, H = Have, k = keys)
+        for (std::vector<InventoryItem>::const_iterator iter = items.begin();
+             iter != items.end(); ++iter) {
+            std::cout << " H: " << iter->GetColor() << " "
+                      << iter->GetCertification() << " " << iter->GetName()
+                      << " W: " << std::round(iter->GetPriceUpperBound()) << "k"
+                      << " or offer " << std::endl;
+        }
+    }
+}
 
 // Returns an iterator to the passed item or the end if not found
 std::vector<InventoryItem>::iterator Inventory::FindItem(const InventoryItem& item) {
