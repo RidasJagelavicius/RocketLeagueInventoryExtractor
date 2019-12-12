@@ -68,20 +68,24 @@ And **Inventory::PrintSellingList()** produced this output:
 >                            SELLING ITEMS
 >
 >==============================  Wheels  ==============================
+>
 >H: Burnt Sienna  FGSP
 >   W: 1k or offer
 >H: Saffron  Spiralis
 >   W: 1k or offer
 >
 >==============================  Toppers  ==============================
+>
 >H: Cobalt  Wildcat Ears
 >   W: 2k or offer
 >
 >==============================  Cars  ==============================
+>
 >H: Default  Dominus GT
 >   W: 2k or offer
 >
 >==============================  Decals  ==============================
+>
 >H: Default  Octane - MG-88
 >   W: 1k or offer
 
