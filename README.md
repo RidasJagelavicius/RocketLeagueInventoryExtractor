@@ -71,6 +71,7 @@ And **Inventory::PrintSellingList()** produced this output:
 >
 >H: Burnt Sienna  FGSP
 >   W: 1k or offer
+>
 >H: Saffron  Spiralis
 >   W: 1k or offer
 >
