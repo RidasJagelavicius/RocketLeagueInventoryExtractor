@@ -30,9 +30,13 @@ These can be used in unison to generate an inventory from images of rocket leagu
 ## Visuals
 ### Item Classification
 Given this image:
+
 ![](https://i.imgur.com/tPO6yzt.png)
+
 The ItemClassifier was able to detect this text:
+
 ![](https://i.imgur.com/BD9DjxA.png)
+
 The ItemClassifier was able to extract this text:
 > SIENNA
 > BURNT
