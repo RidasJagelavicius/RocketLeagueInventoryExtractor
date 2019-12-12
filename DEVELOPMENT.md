@@ -30,5 +30,7 @@
    1. Successfully extract SOME text using tesseract
    1. Successfully linked catch.hpp and tested all files
    1. Created ItemClassifier API to modularize text detection and recognition, in addition to added functionality
+   1. Created Inventory API that can hold InventoryItems and prints different lists
+   1. Created an in-depth README.md
 1. Conflicts:
-   1. Tesseract has difficulty extracting text from some images. I suspect this is because the color of the text almost matches its background and subtracting the mean of the image is insufficient.
+   1. Tesseract has difficulty extracting text from some images. I suspect this is because the color of the text almost matches its background and subtracting the mean of the image is insufficient. The accuracy of the text extraction may therefore vary between objects. 
