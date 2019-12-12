@@ -104,6 +104,8 @@ I found the following two videos very useful:
 
 For installing and setting up Tesseract and jsoncpp, I suggest using *[vcpkg](https://vcpkg.readthedocs.io/en/latest/)* as it is a command-prompt package installer, like those shipped in linux distributions
 
+This was compiled on Visual Studio 2019
+
 ## Usage
 The provided main illustrates the general setup of a project.
 1. Download the *[EAST Text Detection Model](https://github.com/oyyd/frozen_east_text_detection.pb)* or a similar text detection model, and create a JSON like that of Prices.json. You may update or amend PriceScraper.py for this.
