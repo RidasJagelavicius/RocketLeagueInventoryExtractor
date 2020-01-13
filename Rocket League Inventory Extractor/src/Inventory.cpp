@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 #include <cmath>
-#include <iostream>
+#include <sstream>
 
 #include "Inventory.h"
 
@@ -162,9 +162,11 @@ void Inventory::UpdateItemPrice(const InventoryItem& itemToUpdate,
     }
 }
 
-// Prints out an easy-to-read list of items
-void Inventory::PrettyPrint() const {
+// Returns an easy-to-read list of items
+std::string Inventory::PrettyPrint() const {
   
+  std::stringstream output;
+
   // Iterate through typeMap
     for (std::unordered_map<std::string, std::vector<InventoryItem>>::const_iterator
              it = typeMap_.begin(); it != typeMap_.end(); ++it) {
@@ -172,27 +174,41 @@ void Inventory::PrettyPrint() const {
       const std::vector<InventoryItem>& items = it->second;
 
       // Print header
-      std::cout << std::endl;
+      output << std::endl;
       if(type[type.size()-1] != 's')
         type += "s";
-      std::cout << "==============================  " << type
+      output << "==============================  " << type
                 << "  ==============================" << std::endl;
 
       // Print each item
       for (std::vector<InventoryItem>::const_iterator iter = items.begin();
         iter != items.end(); ++iter) {
         
-        std::cout << " - " << iter->GetColor() << " " << iter->GetCertification() 
-        << " " << iter->GetName() << " (" << iter->GetQuantity() << ") "
-        << iter->GetPriceRange() << std::endl; 
+        output << " - ";
+
+        // Check for existing paint and cert to prevent uneven spacing
+        std::string color = iter->GetColor();
+        if (color != "Default")  // People omit "Default" or "Unpainted" when selling unpainted items
+            output << "[" << color << "]" << " ";
+
+        std::string cert = iter->GetCertification();
+        if (cert != "")
+            output << "[" << cert << "]" << " ";
+
+        output << iter->GetName() << " (" << iter->GetQuantity() << ") "
+        << iter->GetPriceRange() << "k" << std::endl; 
       }
     }
+
+    return output.str();
 }
 
-// Prints out a list of items with lower bound prices listed
-void Inventory::PrintBuyingList() const {
+// Returns a list of items with lower bound prices listed
+std::string Inventory::PrintBuyingList() const {
 
-    std::cout << "                             "
+    std::stringstream output;
+
+    output << "                             "
               << "BUYING ITEMS"
               << "                               " << std::endl;
 
@@ -205,26 +221,48 @@ void Inventory::PrintBuyingList() const {
         const std::vector<InventoryItem>& items = it->second;
 
         // Print header
-        std::cout << std::endl;
+        output << std::endl;
         if (type[type.size() - 1] != 's') type += "s";
-        std::cout << "==============================  " << type
+        output << "==============================  " << type
                   << "  ==============================" << std::endl;
 
         // Print each item (W = Want, H = Have, k = keys)
         for (std::vector<InventoryItem>::const_iterator iter = items.begin();
              iter != items.end(); ++iter) {
-            std::cout << " W: " << iter->GetColor() << " "
-                      << iter->GetCertification() << " " << iter->GetName()
-                      << std::endl << "                               " 
-                      << " H: " << std::floor(iter->GetPriceLowerBound()) << "k" << std::endl;
+
+            output << " H: ";
+
+            // A player cannot trade fractions of a key,
+            // Therefore items priced under one key must be supplemented with an offer
+            int keys = std::floor(iter->GetPriceLowerBound());
+            if (keys == 0) 
+              output << "Offer ";
+            else 
+              output << keys << "k";
+             output << std::endl << "                               " << " W: ";
+            
+            // Check for existing paint and cert to prevent uneven spacing
+            std::string color = iter->GetColor();
+            if (color != "Default") // People omit "Default" or "Unpainted" when selling unpainted items
+              output << "[" << color << "]" << " ";
+
+            std::string cert = iter->GetCertification();
+            if (cert != "") 
+              output << "[" << cert << "]" << " ";
+
+            output << iter->GetName() << std::endl;
         }
     }
+
+    return output.str();
 }
 
-// Prints out a list of items with upper bound prices listed
-void Inventory::PrintSellingList() const {
+// Returns a list of items with upper bound prices listed
+std::string Inventory::PrintSellingList() const {
 
-    std::cout << "                             "
+    std::stringstream output;
+
+    output << "                             "
               << "SELLING ITEMS"
               << "                               " << std::endl;
 
@@ -237,22 +275,34 @@ void Inventory::PrintSellingList() const {
         const std::vector<InventoryItem>& items = it->second;
 
         // Print header
-        std::cout << std::endl;
+        output << std::endl;
         if (type[type.size() - 1] != 's') type += "s";
-        std::cout << "==============================  " << type
+        output << "==============================  " << type
                   << "  ==============================" << std::endl;
 
         // Print each item (W = Want, H = Have, k = keys)
         for (std::vector<InventoryItem>::const_iterator iter = items.begin();
              iter != items.end(); ++iter) {
-            std::cout << " H: " << iter->GetColor() << " "
-                      << iter->GetCertification() << " " << iter->GetName()
+            output << " H: ";
+            
+            // Check for existing paint and cert to prevent uneven spacing
+            std::string color = iter->GetColor();
+            if (color != "Default")  // People omit "Default" or "Unpainted" when selling unpainted items
+                output << "[" << color << "]" << " ";
+
+            std::string cert = iter->GetCertification();
+            if (cert != "")
+                output << "[" << cert << "]"  << " ";
+            
+            output << iter->GetName()
                       << std::endl
                       << "                               " 
                       << " W: " << std::round(iter->GetPriceUpperBound()) << "k"
-                      << " or offer " << std::endl;
+                      << " or Best Offer " << std::endl;
         }
     }
+
+    return output.str();
 }
 
 // Returns an iterator to the passed item or the end if not found

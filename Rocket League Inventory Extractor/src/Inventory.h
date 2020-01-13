@@ -35,14 +35,22 @@ class Inventory{
     // Updates the price of an item if it exists
     void UpdateItemPrice(const InventoryItem& itemToUpdate, std::string newPrice);
 
-    // Prints out an easy-to-read list of items
-    void PrettyPrint() const;
+    // Returns an easy-to-read list of items
+    // In the following format:
+    // [Color] [Certification] ItemName (Quantity) LowerPrice-UpperPrice k
+    std::string PrettyPrint() const;
 
-    // Prints out a list of items with lower bound prices listed
-    void PrintBuyingList() const;
+    // Returns a list of items with lower bound prices
+    // In the following format:
+    // H: LowerPrice k
+    // W: [Color] [Certification] ItemName
+    std::string PrintBuyingList() const;
 
-    // Prints out a list of items with upper bound prices listed
-    void PrintSellingList() const;
+    // Returns a list of items with upper bound prices listed
+    // In the following format:
+    // H: [Color] [Certification] ItemName
+    // W: UpperPrice k or offer
+    std::string PrintSellingList() const;
 
     // Return all items
     std::vector<InventoryItem> GetItems();
