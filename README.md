@@ -50,44 +50,39 @@ The ItemClassifier was also able to extract the following information upon runni
 
 ### Inventory Output
 After classifying a few images and creating an Inventory of generated InventoryItems,
-**Inventory::PrettyPrint()** produced this output:
+**Inventory::PrettyPrint()** returned this string:
 >==============================  Wheels  ==============================
-> - Burnt Sienna  FGSP (1) 0.33-1
-> - Saffron  Spiralis (1) 0.5-1
+> - [Burnt Sienna] FGSP (1) 0.33-1k
+> - [Saffron] Spiralis (1) 0.5-1k
 >
 >==============================  Toppers  ==============================
-> - Cobalt  Wildcat Ears (1) 1-1.5
+> - [Cobalt] Wildcat Ears (1) 1-1.5k
 >
 >==============================  Cars  ==============================
-> - Default  Dominus GT (1) 0.75-1.5
+> - Dominus GT (1) 0.75-1.5k
 >
 >==============================  Decals  ==============================
-> - Default  Octane - MG-88 (1) 0.5-1
+> - Octane - MG-88 (1) 0.5-1k
 
-And **Inventory::PrintSellingList()** produced this output:
+And **Inventory::PrintSellingList()** returned this string:
 >                            SELLING ITEMS
 >
 >==============================  Wheels  ==============================
->
->H: Burnt Sienna  FGSP
+>H: [Burnt Sienna] FGSP
 >   W: 1k or offer
->
->H: Saffron  Spiralis
+>H: [Saffron] Spiralis
 >   W: 1k or offer
 >
 >==============================  Toppers  ==============================
->
->H: Cobalt  Wildcat Ears
+>H: [Cobalt] Wildcat Ears
 >   W: 2k or offer
 >
 >==============================  Cars  ==============================
->
->H: Default  Dominus GT
+>H: Dominus GT
 >   W: 2k or offer
 >
 >==============================  Decals  ==============================
->
->H: Default  Octane - MG-88
+>H: Octane - MG-88
 >   W: 1k or offer
 
 ## Installation
@@ -127,7 +122,7 @@ The provided main illustrates the general setup of a project.
 1. Print desired list
    1. **Inventory::PrettyPrint()** will generate a list of each item by type, outputting the color, certification, name, quantity, and price range of each item
    1. **Inventory::PrintSellingList()** will generate a list similar to that of PrettyPrint(), but with the additional header "SELLING ITEMS" and list the items as what you have (H:) and the upper bound of the item's price range as what you want (W:) in keys (k)
-   1. **Inventory::PrintBuyingList()** generates a list similar to PrintSellingList() but with the header "BUYING ITEMS" and the lower bound of an item's price in keys rounded down ***NOTE: This may result in an output of "W: 0k"***
+   1. **Inventory::PrintBuyingList()** generates a list similar to PrintSellingList() but with the header "BUYING ITEMS" and the lower bound of an item's price in keys rounded down ***NOTE: Prices rounded down to 0 keys output "H: Offer" instead of "H: 0k"***
 
 ## Contact
 If you've got questions or suggestions, or just want to say hello, you may contact me at:

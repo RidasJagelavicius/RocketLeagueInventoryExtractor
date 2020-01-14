@@ -1,3 +1,4 @@
+# This is the development log. There will be a significant contrast between the first 4 weeks and subsequent dates, the latter having more specific dates as I learn how to keep a devlog.
 # Week 1:
 1. Log/Implemented:
   1. Installed openCV and figured out most of the methodology behind my approach
@@ -34,3 +35,7 @@
    1. Created an in-depth README.md
 1. Conflicts:
    1. Tesseract has difficulty extracting text from some images. I suspect this is because the color of the text almost matches its background and subtracting the mean of the image is insufficient. The accuracy of the text extraction may therefore vary between objects. 
+
+# January 2020
+1. Log:
+  1. Changed PrettyPrint, PrintBuyingList, and PrintSellingList general output; now also return strings for printing to a file or anything
