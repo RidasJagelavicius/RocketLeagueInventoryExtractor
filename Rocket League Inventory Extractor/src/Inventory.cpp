@@ -183,8 +183,6 @@ std::string Inventory::PrettyPrint() const {
       // Print each item
       for (std::vector<InventoryItem>::const_iterator iter = items.begin();
         iter != items.end(); ++iter) {
-        
-        output << " - ";
 
         // Check for existing paint and cert to prevent uneven spacing
         std::string color = iter->GetColor();
