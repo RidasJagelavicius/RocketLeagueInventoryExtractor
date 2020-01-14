@@ -62,13 +62,18 @@ int main() {
      inv.AddItem(item);
 
      // Show detected text - Press any key to continue
-     //classifier.RenderTextDetections();
+     classifier.RenderTextDetections();
  }
 
  // Print different lists
  std::cout << inv.PrettyPrint() << std::endl;
  std::cout << inv.PrintSellingList() << std::endl;
  std::cout << inv.PrintBuyingList() << std::endl;
+
+ // Saves the inventory to a file to prevent reclassification
+ // To create an inventory based on the saved file,
+ // Simply create an Inventory object and call Inventory::ReadInvFromFile()
+ inv.WriteInvToFile();
 
  return 0;
 }
