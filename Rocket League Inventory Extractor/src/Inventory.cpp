@@ -2,6 +2,8 @@
 #include <string>
 #include <cmath>
 #include <sstream>
+#include <filesystem>
+#include <fstream>
 
 #include "Inventory.h"
 
@@ -318,4 +320,66 @@ std::vector<InventoryItem>::iterator Inventory::FindItem(const InventoryItem& it
 // Return all items
 std::vector<InventoryItem> Inventory::GetItems() {
   return items_;
+}
+
+// Creates a "saved" folder and stores an inventory for faster retrieval
+bool Inventory::WriteInvToFile() {
+  
+  // Creates the "saved" folder
+  std::filesystem::create_directory("..//saved//");
+
+  // Creates a text file containing each inventory item
+  std::ofstream output("..//saved//inventory.txt");
+
+  // Write each inventory item to file to prevent reclassification
+  for(const InventoryItem & item : items_) {
+    output << item.GetName() << std::endl 
+          << item.GetCertification() << std::endl 
+          << item.GetColor() << std::endl 
+          << item.GetPriceRange() << std::endl 
+          << item.GetQuantity() << std::endl
+          << item.IsTradable() << std::endl;
+  }
+
+  // Check that the file was created
+  std::ifstream check("..//saved//inventory.txt");
+  if (check)
+    return true;
+  return false;
+}
+
+// Reads in and populates an inventory from saved/inventory.txt
+// Returns whether or not the process could be completed successfully
+bool Inventory::ReadInvFromFile() {
+
+  // Check for an existing saved inventory
+  std::ifstream input("..//saved//inventory.txt");
+
+  if (input) {
+
+    std::string name, cert, color, price, qt, tradable;
+
+    while(!input.eof()) {
+      // Capture each trait
+      std::getline(input,name);
+      std::getline(input, cert);
+      std::getline(input, color);
+      std::getline(input, price);
+      std::getline(input, qt);
+      std::getline(input, tradable);
+      
+      // Exit if incomplete item or empty inventory
+      if (qt.empty() || tradable.empty())
+        break;
+
+      int quantity = std::stoi(qt);
+      bool canTrade = std::stoi(tradable);
+
+      // Create an InventoryItem object and add it to the Inventory
+      InventoryItem item(name, cert, color, canTrade, quantity, price);
+      AddItem(item);
+    }
+    return true;
+  }
+  return false;
 }

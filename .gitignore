@@ -3,6 +3,7 @@
 
 # Actual Rocket League Project
 *.png
+"Rocket League Inventory Extractor//saved*"
 
 ### OpenFrameworks ###
 # ignore generated binaries

@@ -55,6 +55,14 @@ class Inventory{
     // Return all items
     std::vector<InventoryItem> GetItems();
 
+    // Creates a "saved" folder and stores an inventory for faster retrieval
+    // Returns whether or not the process was successful
+    bool WriteInvToFile();
+
+    // Reads in and populates an inventory from saved/inventory.txt
+    // Returns whether or not the process could be completed successfully
+    bool ReadInvFromFile();
+
   private:
     ItemDatabase database_;
     std::vector<InventoryItem> items_; // List of current inventory items

@@ -1,6 +1,6 @@
 #include <vector>
 #include <string>
-#include <iostream>
+#include <fstream>
 
 #include "../catch.hpp"
 #include "../src/Inventory.h"
@@ -72,4 +72,70 @@ TEST_CASE("UpdateItemPrice works") {
     inv.UpdateItemPrice(i11,"15-32");
     std::vector<InventoryItem> items_ = inv.GetItems();
     REQUIRE(items_[0].GetPriceRange() == "15-32");
+}
+
+TEST_CASE("WriteInvToFile returns true with a nonempty inventory") {
+    Inventory inv(items, path_to_db);
+    REQUIRE(inv.WriteInvToFile());
+}
+
+TEST_CASE("WriteInvToFile successfully writes an inventory to a file") {
+    Inventory inv(items, path_to_db);
+    REQUIRE(inv.WriteInvToFile());
+    int lines = 0;
+    std::string temp;
+    std::ifstream input("..//saved//inventory.txt");
+
+    while (!input.eof()) {
+      std::getline(input,temp);
+      lines++;
+    }
+
+    int num_items = items.size();
+    int num_traits = 6;
+
+    // Files often have an extra blank line containing a bit flag, hence lines - 1
+    REQUIRE(lines - 1 == num_items * num_traits);
+}
+
+TEST_CASE("WriteInvToFile returns true with an empty inventory") {
+    items = {};
+    Inventory inv(items, path_to_db);
+    REQUIRE(inv.WriteInvToFile());
+}
+
+TEST_CASE("ReadInvFromFile returns true with an nonempty inventory") {
+    items = {i11, i31, i41, i51};
+    Inventory inv(items, path_to_db);
+    inv.WriteInvToFile();
+
+    Inventory inv2(path_to_db);
+    REQUIRE(inv2.ReadInvFromFile());
+}
+
+TEST_CASE("ReadInvFromFile returns true with an empty inventory") {
+    items = {};
+    Inventory inv(items, path_to_db);
+    inv.WriteInvToFile();
+
+    Inventory inv2(path_to_db);
+    REQUIRE(inv2.ReadInvFromFile());
+}
+
+TEST_CASE("ReadInvFromFile properly populates an inventory") {
+    Inventory inv(items, path_to_db);
+    inv.WriteInvToFile();
+
+    Inventory inv2(path_to_db);
+    inv2.ReadInvFromFile();
+
+    REQUIRE(inv.GetInventoryWorth() == inv2.GetInventoryWorth());
+
+    std::vector<InventoryItem> inv1Items = inv.GetItems();
+    std::vector<InventoryItem> inv2Items = inv2.GetItems();
+    REQUIRE(inv1Items.size() == inv2Items.size());
+
+    for (unsigned i = 0; i < inv1Items.size(); i++) {
+      REQUIRE(inv1Items.at(i) == inv2Items.at(i));
+    }
 }
