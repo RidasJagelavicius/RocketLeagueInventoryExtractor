@@ -139,3 +139,13 @@ TEST_CASE("ReadInvFromFile properly populates an inventory") {
       REQUIRE(inv1Items.at(i) == inv2Items.at(i));
     }
 }
+
+TEST_CASE("ReadInvFromFile clears an existing inventory") {
+    Inventory inv(items, path_to_db);
+    inv.WriteInvToFile();
+
+    int invWorth = inv.GetInventoryWorth();
+    inv.ReadInvFromFile();
+
+    REQUIRE(inv.GetInventoryWorth() == invWorth);
+}

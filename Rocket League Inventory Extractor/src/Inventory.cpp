@@ -357,6 +357,9 @@ bool Inventory::ReadInvFromFile() {
 
   if (input) {
 
+    // Clear and replace inventory
+    items_.clear();
+
     std::string name, cert, color, price, qt, tradable;
 
     while(!input.eof()) {
