@@ -11,7 +11,7 @@ InventoryItem::InventoryItem(std::string name)
       certification_(""),
       paint_(""),
       rarity_(""),
-      tradable_(""),
+      tradable_(true),
       type_(""),
       quantity_(1),
       price_("") {
@@ -22,7 +22,7 @@ InventoryItem::InventoryItem(std::string name, std::string paint)
       certification_(""),
       paint_(paint),
       rarity_(""),
-      tradable_(""),
+      tradable_(true),
       type_(""),
       quantity_(1),
       price_("") {
@@ -34,7 +34,7 @@ InventoryItem::InventoryItem(std::string name, std::string certification,
       certification_(certification),
       paint_(paint),
       rarity_(""),
-      tradable_(""),
+      tradable_(true),
       type_(""),
       quantity_(1),
       price_("") {
@@ -46,7 +46,7 @@ InventoryItem::InventoryItem(std::string name, std::string certification,
       certification_(certification),
       paint_(paint),
       rarity_(""),
-      tradable_(""),
+      tradable_(true),
       type_(""),
       quantity_(1),
       price_(price) {
@@ -63,6 +63,18 @@ InventoryItem::InventoryItem(std::string name, std::string certification,
       type_(""),
       quantity_(quantity),
       price_("") {
+        /* Nothing */ }
+
+InventoryItem::InventoryItem(std::string name, std::string certification,
+                             std::string paint, bool tradable, int quantity, std::string price)
+    : name_(name),
+      certification_(certification),
+      paint_(paint),
+      rarity_(""),
+      tradable_(tradable),
+      type_(""),
+      quantity_(quantity),
+      price_(price) {
         /* Nothing */ }
 
 InventoryItem::InventoryItem(std::string name, std::string certification,

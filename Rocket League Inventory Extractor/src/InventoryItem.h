@@ -21,9 +21,12 @@ class InventoryItem {
 	InventoryItem(std::string name, std::string certification,
                   std::string paint, bool tradable, int quantity);
 
-    InventoryItem(std::string name, std::string certification,
-                  std::string paint, std::string rarity, 
-				  bool tradable, std::string type, int quantity, std::string price);
+  InventoryItem(std::string name, std::string certification,
+                      std::string paint, bool tradable, int quantity, std::string price);
+
+  InventoryItem(std::string name, std::string certification,
+                std::string paint, std::string rarity, 
+				bool tradable, std::string type, int quantity, std::string price);
 
 	// Returns the name of the item ex. "20XX"
 	std::string GetName() const; 
