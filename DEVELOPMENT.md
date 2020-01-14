@@ -34,8 +34,9 @@
    1. Created Inventory API that can hold InventoryItems and prints different lists
    1. Created an in-depth README.md
 1. Conflicts:
-   1. Tesseract has difficulty extracting text from some images. I suspect this is because the color of the text almost matches its background and subtracting the mean of the image is insufficient. The accuracy of the text extraction may therefore vary between objects. 
+   1. Tesseract has difficulty extracting text from some images. I suspect this is because the color of the text almost matches its background and subtracting the mean of the image is insufficient. The accuracy of the text extraction may therefore vary between objects.
 
 # January 2020
 1. Log:
   1. Changed PrettyPrint, PrintBuyingList, and PrintSellingList general output; now also return strings for printing to a file or anything
+  1. Added ability to save and load a single inventory using Inventory::WriteInvToFile() and Inventory::ReadInvFromFile(). This prevents the long run-time from re-classifying items from images by instead writing/reading to/from a .txt file

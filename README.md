@@ -17,6 +17,7 @@ This project features *four* different APIs that work in conjunction.
 1. Inventory
    1. Represents a Rocket League Inventory (composed of multiple InventoryItems)
    1. Can add and remove items, update a particular item's price, and most importantly, pretty print the inventory or "buy" or "sell" lists
+   1. Can be saved and loaded without reclassifying all items
 1. ItemDatabase
    1. Can be queried for detailed information on an item
    1. Can return the price of an item of a particular color, an item's rarity, its type, or it's full name
@@ -132,6 +133,9 @@ The provided main illustrates the general setup of a project.
    1. **Inventory::PrettyPrint()** will generate a list of each item by type, outputting the color, certification, name, quantity, and price range of each item
    1. **Inventory::PrintSellingList()** will generate a list similar to that of PrettyPrint(), but with the additional header "SELLING ITEMS" and list the items as what you have (H:) and the upper bound of the item's price range as what you want (W:) in keys (k)
    1. **Inventory::PrintBuyingList()** generates a list similar to PrintSellingList() but with the header "BUYING ITEMS" and the lower bound of an item's price in keys rounded down ***NOTE: This may result in an output of "W: 0k"***
+1. Save Inventory to prevent long run-times of reclassification from images
+   1. **Inventory::WriteInvToFile()** creates a *saved* folder and an *inventory.txt* within that folder that can be loaded in at a later time to have access to an Inventory without having to generate the Inventory by classifying a series of images again. This is especially useful for larger inventories. This function returns true if successful.
+   1. **Inventory::ReadInvFromFile()** can be used to load in a saved Inventory. Simply create an Inventory object and call the function. If the process was successful (*inventory.txt* exists and could be read) then the function returns true.
 
 ## Contact
 If you've got questions or suggestions, or just want to say hello, you may contact me at:
