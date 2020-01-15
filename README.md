@@ -1,5 +1,5 @@
 # Rocket League Inventory Extractor by Ridas Jagelavicius
-Rocket League Inventory Extractor performs OCR on an image of a Rocket League inventory item and extracts the item's name, certification, color, and price in keys.
+Rocket League Inventory Extractor generates an Inventory by extracting an item's traits (color, certification, name) from an image of a Rocket League item using OpenCV and Tesseract. Inventory API allows users to view the current value of the user's full inventory, or display the inventory in a readable format for quick analysis or for trade purposes.
 
 ## Description
 ### Background
@@ -8,6 +8,8 @@ The game features lootboxes and random drops that the community can trade with o
 As of the time of this project's creation, the active currency used by traders were Keys.
 Keys gain their value from having to be purchased with real currency in order to open lootboxes for a chance to obtain rare or interesting items.
 *[RL Insider](https://rl.insider.gg)* is a popular website used by the trading community to gauge item value in keys.
+
+Rocket League neither has a built-in system of evaluating the total price of a user's inventory, nor an efficient way to view an inventory once it has become massive. Currently, a user would have to lookup and calculate the price of each item in their inventory to estimate their inventory value, and scroll through potentially hundreds of images to grasp the physical makeup of their Rocket League inventory. This program serves to simplify both price evaluation and inventory analysis.
 
 ### Features
 This project features *four* different APIs that work in conjunction.
