@@ -140,8 +140,12 @@ The provided main illustrates the general setup of a project.
    1. **Inventory::ReadInvFromFile()** can be used to load in a saved Inventory. Simply create an Inventory object and call the function. If the process was successful (*inventory.txt* exists and could be read) then the function returns true.
 
 ## Contact
-If you've got questions or suggestions, or just want to say hello, you may contact me at:
+If you've got questions or suggestions, I can be reached at:
 **RidasJagelavicius@gmail.com**
+
+## Important Notes
+1. The ItemClassifier may not be able to classify all items with 100% accuracy. This is being improved. Suggestions are also appreciated.
+1. Rocket League is currently undergoing a shift in currency from *keys* to *credits*. Once the prices have been fully converted, more improvements will be made.
 
 ## License
 *[MIT](https://choosealicense.com/licenses/mit/)*
